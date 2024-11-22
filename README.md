@@ -101,6 +101,7 @@ Group=webgen
 ExecStart=/var/lib/webgen/bin/generate_index
 ```
 <br>
+<hr/>
 
 ### Creating `generate-index.timer` script
 Next we will create a timer that runs the script daily at 5:00pm; to do so write the following command.
@@ -116,7 +117,7 @@ Description=Runs the generate_index script daily at 5:00pm
 
 [Timer]
 OnCalendar=*-*-* 05:00:00
-Unit=generate_index.service
+Unit=generate-index.service
 Persistent=true
 
 [Install]
@@ -135,7 +136,26 @@ WantedBy=timers.target
 - **ExecStart=/var/lib/webgen/bin/generate_index**: Specifies the command that will be executed when the service starts. Here, it runs the `generate_index` script located in `/var/lib/webgen/bin/generate_index`.
 
 - **Type=simple**: This means that the service is considered started immediately when the `ExecStart` command 
+<hr/>
 
+<br>
+
+After creating the service file and the ini file we need to start and enable one of them so it runs everytime you boot up your computer.
+
+```bash
+sudo systemctl start generate-index.timer
+sudo systemctl enable generate-index.timer
+sudo systemctl start generate-index.service
+``` 
+
+To check and see if the timer is active and service is run you can run the following commands.
+
+```bash
+systemctl status generate-index.timer
+systemctl status generate-index.service
+```
+
+![alt text](images/status-timer.png)
 
 
 
