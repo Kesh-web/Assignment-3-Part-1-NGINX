@@ -39,6 +39,14 @@ The benefit of using these specific options when creating the system user is
 **Non-login Tasks:**  
    System users are typically used for non-login tasks, such as running services, by ensuring that they do not require interactive login capabilities.
 
+### Creating Subdirectories `/bin` and `/HTML`
+
+We need to create the following subdirectories within the `webgen` directory. To do so type the following:
+
+```bash
+sudo mkdir -p /var/lib/webgen/bin
+sudo mkdir -p /var/lib/webgen/HTML
+```
 
 ### Setting Ownership for the `webgen` System User
 
@@ -46,6 +54,10 @@ By running the following command `webgen` user has ownership of its home directo
 ```bash
 sudo chown -R webgen:webgen /var/lib/webgen
 ```
+
+
+## Task 2:
+
 
 ### Explanation of Setting Ownership Options
 
