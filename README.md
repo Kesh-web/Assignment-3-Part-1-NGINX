@@ -9,7 +9,7 @@ This assignment focuses on building and configuring a simple automated system to
 - Configure Nginx to serve the HTML file on an Arch Linux server.
 - Secure the server using a firewall configured with `ufw`.
 
-The assignment emphasizes critical skills such as Bash scripting, `systemd` management, web server configuration, and basic firewall security, ensuring a well-rounded understanding of server administration.
+The assignment includes using skills such as Bash scripting, `systemd` management, web server configuration, and basic firewall security.
 
 
 ## Table of contents
@@ -76,6 +76,35 @@ sudo chown -R webgen:webgen /var/lib/webgen
 
 
 ## Task 2:
+To start the first step would be creating the service file `generate-index.service` that would run the `generate_index` script.
+
+```bash 
+sudo nvim /etc/systemd/system/generate-index.service
+```
+Once youre in there you can edit it and add the following:
+
+```ini
+[Unit]
+Description=Generate Index Service File
+
+[Service]
+Type=simple
+ExecStart=/var/lib/webgen/bin/generate_index
+```
+
+### Explanation of the Service File
+
+#### [Unit]:
+- **Description**: A brief description of the service.
+
+#### [Service]:
+- **Type=simple**: This tells systemd that the service is a simple service that does not fork. It starts immediately and runs in the foreground. 
+- **ExecStart=/var/lib/webgen/bin/generate_index**: Specifies the command that will be executed when the service starts. Here, it runs the `generate_index` script located in `/var/lib/webgen/bin/generate_index`.
+
+- **Type=simple**: This means that the service is considered started immediately when the `ExecStart` command 
+
+
+
 
 
 ### Explanation of Setting Ownership Options
