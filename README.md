@@ -74,6 +74,13 @@ By running the following command `webgen` user has ownership of its home directo
 sudo chown -R webgen:webgen /var/lib/webgen
 ```
 
+### Explanation of Setting Ownership Options
+
+`-R`
+ command changes the ownership of `/var/lib/webgen` and all files and subdirectories within it, making sure that all files in the directory are owned by the `webgen` user and group.
+
+
+
 
 ## Task 2:
 To start the first step would be creating the service file `generate-index.service` that would run the `generate_index` script.
@@ -89,8 +96,34 @@ Description=Generate Index Service File
 
 [Service]
 Type=simple
+User=webgen
+Group=webgen
 ExecStart=/var/lib/webgen/bin/generate_index
 ```
+<br>
+
+### Creating `generate-index.timer` script
+Next we will create a timer that runs the script daily at 5:00pm; to do so write the following command.
+
+```bash
+sudo nano /etc/systemd/system/generate-index.timer
+```
+Once youre in the script you can add the following into the init file.
+
+```ini
+[Unit]
+Description=Runs the generate_index script daily at 5:00pm 
+
+[Timer]
+OnCalendar=*-*-* 05:00:00
+Unit=generate_index.service
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+```
+
+
 
 ### Explanation of the Service File
 
@@ -104,13 +137,6 @@ ExecStart=/var/lib/webgen/bin/generate_index
 - **Type=simple**: This means that the service is considered started immediately when the `ExecStart` command 
 
 
-
-
-
-### Explanation of Setting Ownership Options
-
-`-R`
- command changes the ownership of `/var/lib/webgen` and all files and subdirectories within it, making sure that all files in the directory are owned by the `webgen` user and group.
 
 
 
