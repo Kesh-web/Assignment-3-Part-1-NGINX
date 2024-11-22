@@ -48,6 +48,25 @@ sudo mkdir -p /var/lib/webgen/bin
 sudo mkdir -p /var/lib/webgen/HTML
 ```
 
+### Cloning the `generate_index` Script into `/bin/`
+
+To set up the `generate_index` script, you can clone it from the sourcehut repo and place it in the `/bin/` directory. 
+
+
+1. First cd into the `/bin/` directory:
+```bash
+cd /var/lib/webgen/bin
+```
+
+2. Second clone the repo with the following 
+```bash 
+git clone https://sr.ht/~user/repo.git generate_index
+```
+3. Third make sure the script is executable
+```bash 
+sudo chmod +x /var/lib/webgen/bin/generate_index
+```
+
 ### Setting Ownership for the `webgen` System User
 
 By running the following command `webgen` user has ownership of its home directory and all subdirectories and files.
