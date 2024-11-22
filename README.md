@@ -36,9 +36,24 @@ The first step is creating the system user `webgen` with a home directory of `/v
 
 The benefit of using these specific options when creating the system user is
 
-
 **Non-login Tasks:**  
    System users are typically used for non-login tasks, such as running services, by ensuring that they do not require interactive login capabilities.
+
+
+### Setting Ownership for the `webgen` System User
+
+By running the following command `webgen` user has ownership of its home directory and all subdirectories and files.
+```bash
+sudo chown -R webgen:webgen /var/lib/webgen
+```
+
+### Explanation of Setting Ownership Options
+
+`-R`
+ command changes the ownership of `/var/lib/webgen` and all files and subdirectories within it, making sure that all files in the directory are owned by the `webgen` user and group.
+
+
+
 
 
 
