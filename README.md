@@ -234,6 +234,11 @@ server {
 
 
 
+  ### Importance of Using a Separate Server Block File
+
+  Using a separate server block file instead of modifying the main `nginx.conf` file directly is important because keeping server blocks in seperate files helps maintain an organized configuration, you can also make updates and changes to an individual server without affecting the main `nginx.conf, and if there are any issues you can isolate the problem easier.
+
+ 
 
 
 
