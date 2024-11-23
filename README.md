@@ -56,7 +56,7 @@ To set up the `generate_index` script, you can clone it from the sourcehut repo 
 
 2. Second, clone the repo with the following:
   ```bash 
-  git clone https://sr.ht/~user/repo.git generate_index
+  git clone https://git.sr.ht/~nathan_climbs/2420-as2-start
   ```
 
 3. Third, make sure the script is executable:
@@ -185,7 +185,7 @@ You want to change the user from the default to `webgen`, and it should look lik
 
 ### Adding a Server Block
 
-A server block in Nginx defines how requests are processed for a specific domain or IP address. It allows hosting multiple websites on a single server with different configurations. We will edit it using the following command:
+A server block in Nginx defines how requests are processed for a specific domain or IP address. It allows hosting multiple websites on a single server with different configurations. We wil create a new fconf
 
 ```bash
 sudo nvim /etc/nginx/nginx.conf
@@ -224,7 +224,7 @@ server {
 - **`location / { try_files $uri $uri/ =404; }`**  
   Ensures Nginx tries to serve the requested file or directory. If it doesn't exist, a `404 Not Found` error is returned.
 
-> **Important:** Using a separate server block file instead of modifying the main `nginx.conf` file directly helps maintain an organized configuration. It allows you to make updates and changes to an individual server without affecting the main `nginx.conf`, and if there are any issues, you can isolate the problem more easily.
+> **Important:** Using a separate server block file instead of modifying the main `nginx.conf` file directly helps maintain an organized configuration. It allows you to make updates and changes to an individual server without affecting the main `nginx.conf`, and if there are any issues, you can isolate the problem more easily.g
 
 ### Checking Nginx Service Status
 
@@ -250,6 +250,16 @@ To make sure that Nginx is running properly and the config file we made works, w
   sudo systemctl restart nginx
   ```
 
+  ## Task 4: Installing and Configuring `ufw` with ssh and http
+To start we will first install `ufw`, we can do so by typing in the following command.
+```bash
+sudo pacman -Syu ufw
+```
+> **Caution:** Do not enable `ufw` immediately after installation, as it may lock you out of your SSH session. Ensure you have allowed SSH connections before enabling the firewall.
+
+```bash
+sudo ufw allow ssh
+```
 ## References
 
 - [Arch Linux Wiki: Users and Groups](https://wiki.archlinux.org/title/Users_and_groups)
