@@ -238,7 +238,32 @@ server {
 
   Using a separate server block file instead of modifying the main `nginx.conf` file directly is important because keeping server blocks in seperate files helps maintain an organized configuration, you can also make updates and changes to an individual server without affecting the main `nginx.conf, and if there are any issues you can isolate the problem easier.
 
- 
+ <br>
+
+### Checking Nginx Service Status
+
+To make sure that Nginx is running properly and the config file we made works, we can use the following commands.
+
+1. **Check the status of the Nginx service:**
+
+  ```bash
+  sudo systemctl status nginx
+  ```
+
+
+2. **Test the Nginx configuration for syntax errors:**
+
+  ```bash
+  sudo nginx -t
+  ```
+
+  This command will check the Nginx config files for any syntax errors.
+
+3. **Restart Nginx to apply any changes:**
+
+  ```bash
+  sudo systemctl restart nginx
+  ```
 
 
 
@@ -248,3 +273,9 @@ server {
 ## References Page
 
 https://wiki.archlinux.org/title/Users_and_groups
+
+https://wiki.archlinux.org/title/Nginx#Server_blocks
+
+https://wiki.archlinux.org/title/Nginx
+
+https://wiki.archlinux.org/title/Nginx#Running_as_a_specific_user
