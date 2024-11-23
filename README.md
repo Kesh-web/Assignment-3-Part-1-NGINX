@@ -4,7 +4,7 @@
 
 This assignment focuses on building and configuring a simple automated system to generate and serve system information as a static HTML page. The task involves scripting, system administration, and secure server management. Specifically, we will:
 
-- Create a system user for secure script execution.
+- Create a system user for secure script execution.[1]
 - Automate script execution daily using `systemd` services and timers.
 - Configure Nginx to serve the HTML file on an Arch Linux server.
 - Secure the server using a firewall configured with `ufw`.
@@ -14,9 +14,9 @@ The assignment includes using skills such as Bash scripting, `systemd` managemen
 
 ## Table of contents
 
-## Task 1: Setting up System User with Ownership and Directories
+## Task 1: Setting up System User with Ownership and Directories 
 
-The first step is creating the system user `webgen` with a home directory of `/var/lib/webgen`, giving it ownership, and  an appropriate login shell for a non-login user.
+[1]: The first step is creating the system user `webgen` with a home directory of `/var/lib/webgen`, giving it ownership, and  an appropriate login shell for a non-login user.
 
    ```bash
    sudo useradd -r -d /var/lib/webgen -s /usr/sbin/nologin webgen
@@ -155,17 +155,81 @@ systemctl status generate-index.timer
 systemctl status generate-index.service
 ```
 
-![alt text](images/status-timer.png)
+
+
+![status_timer_active_+_enabled](images/status-timer.png)
+
+As well as using the journalctl command to see the logs of `generate-index.service`.
+
+```bash
+journalctl -u generate-index.service
+```
+This would be the output showing that it will succesfully be run daily at 5:00 pm.
+
+
+![journalctl_service](images/journalctl_service.png)
+
+(Renemmber to add missing picture)x
 
 
 
+## Task 3:
+To start we would need to modify the main `nginx.conf` file to ensure the server runs as the `webgen` user. Before we do that we have to download nginx
+
+```bash
+sudo pacman -Syu nginx
+```
+After downloading `nginx` we can then start to edit the main file with the folllowing command.
+
+```bash
+  sudo nvim /etc/nginx/nginx.conf
+  ```
+
+You want to change the user from the default to `
+  webgen` and it should look like the following image.
+
+![nginx-user](images/nginx-user.png)
+
+### Adding a Server Block
+
+A server block in Nginx defines how requests are processed for a specific domain or IP address. It allows hosting multiple websites on a single server with different configurations. We will edit it using the following command.
+
+```bash
+sudo nvim /etc/nginx/nginx.conf
+```
 
 
 
+```nginx
+server {
+    listen 80;
+    server_name _;
 
+    root /var/lib/webgen/HTML/index;
+    index index.html;
 
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+```
 
+### Explanation of the Server Block
 
+- **`listen 80;`**  
+  Configures Nginx to listen on port 80 for HTTP traffic.
+
+- **`server_name _;`**  
+  The `_` acts as a wildcard, making this server block respond to all requests if no other server block matches.
+
+- **`root /var/lib/webgen/HTML/index;`**  
+  Sets the root directory for the website files.
+
+- **`index index.html;`**  
+  Specifies the default file to serve (e.g., `index.html`) when a directory is requested.
+
+- **`location / { try_files $uri $uri/ =404; }`**  
+  Ensures Nginx tries to serve the requested file or directory. If it doesn't exist, a `404 Not Found` error is returned.
 
 
 
