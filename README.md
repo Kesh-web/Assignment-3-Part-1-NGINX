@@ -4,7 +4,7 @@
 
 This assignment focuses on building and configuring a simple automated system to generate and serve system information as a static HTML page. The task involves scripting, system administration, and secure server management. Specifically, we will:
 
-- Create a system user for secure script execution.[^1]
+- Create a system user for secure script execution.
 - Automate script execution daily using `systemd` services and timers.
 - Configure Nginx to serve the HTML file on an Arch Linux server.
 - Secure the server using a firewall configured with `ufw`.
@@ -17,7 +17,7 @@ The assignment includes using skills such as Bash scripting, `systemd` managemen
 
 ## Task 1: Setting up System User with Ownership and Directories 
 
-[^1]: The first step is creating the system user `webgen` with a home directory of `/var/lib/webgen`, giving it ownership, and an appropriate login shell for a non-login user.
+The first step is creating the system user `webgen` with a home directory of `/var/lib/webgen`, giving it ownership, and an appropriate login shell for a non-login user.
 
   ```bash
   sudo useradd -r -d /var/lib/webgen -s /usr/sbin/nologin webgen
@@ -56,7 +56,7 @@ To set up the `generate_index` script, you can clone it from the sourcehut repo 
 
 2. Second, clone the repo with the following:
   ```bash 
-  git clone https://git.sr.ht/~nathan_climbs/2420-as2-start
+  git clone https://git.sr.ht/~nathan_climbs/2420-as2-start generate_index
   ```
 
 3. Third, make sure the script is executable:
