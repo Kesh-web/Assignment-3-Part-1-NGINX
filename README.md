@@ -11,7 +11,7 @@ This assignment focuses on building and configuring a simple automated system to
 
 The assignment includes using skills such as Bash scripting, `systemd` management, web server configuration, and basic firewall security.
 
-> **Note:** Ensure you have root or sudo privileges to perform the tasks outlined in this assignment.
+> **Note:** Ensure you have root or sudo privileges to perform the tasks outlined in the following.
 
 ## Table of contents
 
@@ -183,30 +183,99 @@ You want to change the user from the default to `webgen`, and it should look lik
 
 ![nginx-user](images/nginx-user.png)
 
-### Adding a Server Block
+### Adding a Server Block in a New Configuration File
 
-A server block in Nginx defines how requests are processed for a specific domain or IP address. It allows hosting multiple websites on a single server with different configurations. We wil create a new fconf
+Instead of modifying the main `nginx.conf` file, we will create a new directory for custom configuration files and add a server block in a new configuration file.
 
-```bash
-sudo nvim /etc/nginx/nginx.conf
-```
+1. **Create a new directory for custom configuration files:**
 
-Add the following server block configuration:
+  ```bash
+  sudo mkdir -p /etc/nginx/sites-available
+  sudo mkdir -p /etc/nginx/sites-enabled
+  ```
 
-```nginx
-server {
-   listen 80;
-   server_name local-webgen;
+2. **Create a new configuration file for the server block:**
 
-   root /var/lib/webgen/HTML;
-   index index.html;
+  ```bash
+  sudo nvim /etc/nginx/sites-available/webgen.conf
+  ```
 
-   location / {
-      try_files $uri $uri/ =404;
-   }
-}
-```
+3. **Add the following server block configuration to the new file:**
 
+  ```nginx
+  server {
+     listen 80;
+     server_name local-webgen;
+
+     root /var/lib/webgen/HTML;
+     index index.html;
+
+     location / {
+        try_files $uri $uri/ =404;
+     }
+  }
+  ```
+
+4. **Create a symbolic link to enable the new configuration:**
+
+  ```bash
+  sudo ln -s /etc/nginx/sites-available/webgen.conf /etc/nginx/sites-enabled/
+  ```
+
+5. **Include the new directory in the main `nginx.conf` file:**
+
+  ```bash
+  sudo nvim /etc/nginx/nginx.conf
+  ```
+
+  Add the following line inside the `http` block:
+
+  ```nginx
+  include /etc/nginx/sites-enabled/*.conf;
+  ```
+
+### Explanation of the Server Block
+
+- **`listen 80;`**  
+  Configures Nginx to listen on port 80 for HTTP traffic.
+
+- **`server_name local-webgen;`**  
+  Defines the server name for the block.
+
+- **`root /var/lib/webgen/HTML;`**  
+  Sets the root directory for the website files.
+
+- **`index index.html;`**  
+  Specifies the default file to serve (e.g., `index.html`) when a directory is requested.
+
+- **`location / { try_files $uri $uri/ =404; }`**  
+  Ensures Nginx tries to serve the requested file or directory. If it doesn't exist, a `404 Not Found` error is returned.
+
+> **Important:** Using a separate server block file instead of modifying the main `nginx.conf` file directly helps maintain an organized configuration. It allows you to make updates and changes to an individual server without affecting the main `nginx.conf`, and if there are any issues, you can isolate the problem more easily.
+
+### Checking Nginx Service Status
+
+To make sure that Nginx is running properly and the config file we made works, we can use the following commands:
+
+1. **Check the status of the Nginx service:**
+
+  ```bash
+  sudo systemctl status nginx
+  ```
+
+2. **Test the Nginx configuration for syntax errors:**
+
+  ```bash
+  sudo nginx -t
+  ```
+
+  This command will check the Nginx config files for any syntax errors.
+
+3. **Restart Nginx to apply any changes:**
+
+  ```bash
+  sudo systemctl restart nginx
+  ```
 ### Explanation of the Server Block
 
 - **`listen 80;`**  
