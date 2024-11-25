@@ -128,7 +128,14 @@ Type=simple
 User=webgen
 Group=webgen
 ExecStart=/var/lib/webgen/bin/generate_index
-``` 
+```
+
+### Explanation of the Service File
+
+- **Description:** A brief description of the service.
+- **After=network-online.target:** Ensures the service starts only after the network is online.
+- **Wants=network-online.target:** Indicates that the service wants the network to be online, but it is not a strict dependency.
+
 After creating the service file, reload the systemd manager configuration to apply the changes:
 
 ```bash
