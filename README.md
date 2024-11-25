@@ -120,13 +120,21 @@ Once you're in the editor, add the following:
 ```ini
 [Unit]
 Description=Generate Index Service File
+After=network-online.target
+Wants=network-online.target
 
 [Service]
 Type=simple
 User=webgen
 Group=webgen
 ExecStart=/var/lib/webgen/bin/generate_index
+``` 
+After creating the service file, reload the systemd manager configuration to apply the changes:
+
+```bash
+sudo systemctl daemon-reload
 ```
+
 
 ### Creating the Timer Script
 
@@ -471,8 +479,8 @@ Congrats! You have successfully set up your server to generate and serve system 
 - [Arch Linux Wiki: Nginx Server Blocks](https://wiki.archlinux.org/title/Nginx#Server_blocks)
 - [Arch Linux Wiki: Running Nginx as a Specific User](https://wiki.archlinux.org/title/Nginx#Running_as_a_specific_user)
 - [Arch Linux Wiki: Systemd](https://wiki.archlinux.org/title/Systemd)
+- [Arch Linux Wiki: Running services after the network is up](https://wiki.archlinux.org/title/Systemd#Running_services_after_the_network_is_up)
 - [Arch Linux Wiki: Systemd Timers](https://wiki.archlinux.org/title/Systemd/Timers)
 - [Arch Linux Wiki: Uncomplicated Firewall](https://wiki.archlinux.org/title/Uncomplicated_Firewall)
 - [Arch Linux Wiki: Rate Limiting with Ufw](https://wiki.archlinux.org/title/Uncomplicated_Firewall#Rate_limiting_with_ufw)
-
 

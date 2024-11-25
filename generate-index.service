@@ -1,5 +1,7 @@
   [Unit] 
   Description=Generate Index Service File
+  After=network-online.target
+  Wants=network-online.target
   
   [Service]
   Type=simple
