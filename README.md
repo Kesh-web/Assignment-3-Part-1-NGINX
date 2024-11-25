@@ -237,16 +237,16 @@ Instead of modifying the main `nginx.conf` file, we will create a new directory 
 ### Explanation of the Server Block
 
 - **`listen 80;`**  
-  Configures Nginx to listen on port 80 for HTTP traffic.
+  Configures Nginx to listen on port 80.
 
 - **`server_name local-webgen;`**  
-  Defines the server name for the block.
+  Defines the server name.
 
 - **`root /var/lib/webgen/HTML;`**  
-  Sets the root directory for the website files.
+  Sets the root directory for the files.
 
 - **`index index.html;`**  
-  Specifies the default file to serve (e.g., `index.html`) when a directory is requested.
+  Specifies the default file to serve `index.html` when a directory is requested.
 
 - **`location / { try_files $uri $uri/ =404; }`**  
   Ensures Nginx tries to serve the requested file or directory. If it doesn't exist, a `404 Not Found` error is returned.
@@ -319,7 +319,7 @@ To make sure that Nginx is running properly and the config file we made works, w
   sudo systemctl restart nginx
   ```
 
-  ## Task 4: Installing and Configuring `ufw` with ssh and http
+  ## Task 4: Installing and Configuring `ufw`
 To start we will first install `ufw`, we can do so by typing in the following command.
 ```bash
 sudo pacman -Syu ufw
@@ -329,10 +329,48 @@ sudo pacman -Syu ufw
 ```bash
 sudo ufw allow ssh
 ```
+To enhance security, we can enable SSH rate limiting to prevent brute-force attacks. Use the following command to set up it up.
+
+```bash
+sudo ufw limit ssh
+```
+
+
+
+> **Note:** This setting helps to mitigate brute-force attacks by limiting the rate of SSH login attempts.
+
+After configuring the rate limiting, you can enable `ufw`:
+
+```bash
+sudo ufw enable
+```
+
+To check the status of `ufw` and confirm that the rules are applied, use the following command.
+
+```bash
+sudo ufw status
+```
+![ufw-status](image.png)
+
+This will display the current status and rules of the firewall, including the SSH rate limiting.
+
+
 ## References
 
 - [Arch Linux Wiki: Users and Groups](https://wiki.archlinux.org/title/Users_and_groups)
 - [Arch Linux Wiki: Nginx Server Blocks](https://wiki.archlinux.org/title/Nginx#Server_blocks)
 - [Arch Linux Wiki: Nginx](https://wiki.archlinux.org/title/Nginx)
 - [Arch Linux Wiki: Running Nginx as a Specific User](https://wiki.archlinux.org/title/Nginx#Running_as_a_specific_user)
+
+https://wiki.archlinux.org/title/Users_and_groups#Example_adding_a_system_user
+
+https://wiki.archlinux.org/title/Users_and_groups
+
+https://wiki.archlinux.org/title/Systemd/Timers
+
+https://wiki.archlinux.org/title/Systemd
+
+https://wiki.archlinux.org/title/Uncomplicated_Firewall
+
+https://wiki.archlinux.org/title/Uncomplicated_Firewall#Rate_limiting_with_ufw
 
