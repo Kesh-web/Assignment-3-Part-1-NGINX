@@ -145,7 +145,7 @@ sudo systemctl daemon-reload
 
 ### Creating the Timer Script
 
-Next, we will create a timer that runs the script daily at 5:00 PM. To do so, write the following command:
+Next, we will create a timer that runs the script daily at 5:00 AM. To do so, write the following command:
 
 ```bash
 sudo nano /etc/systemd/system/generate-index.timer
@@ -155,10 +155,10 @@ Once you're in the editor, add the following:
 
 ```ini
 [Unit]
-Description=Runs the generate_index script daily at 5:00 PM 
+Description=Runs the generate_index script daily at 5:00 AM
 
 [Timer]
-OnCalendar=*-*-* 17:00:00
+OnCalendar=*-*-* 5:00:00
 Unit=generate-index.service
 Persistent=true
 

@@ -1,5 +1,5 @@
 [Unit]
-Description=Runs the generate_index script daily at 5:00pm
+Description=Runs the generate_index script daily at 5:00 AM
 
 [Timer]
 OnCalendar=*-*-* 05:00:00
