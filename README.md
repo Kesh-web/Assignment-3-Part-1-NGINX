@@ -15,6 +15,30 @@ The assignment includes using skills such as Bash scripting, `systemd` managemen
 > Ensure you have root or sudo privileges to perform the tasks outlined in the following.
 
 ## Table of contents
+- [Introduction](#introduction)
+- [Table of contents](#table-of-contents)
+- [Task 1: Setting up System User with Ownership and Directories](#task-1-setting-up-system-user-with-ownership-and-directories)
+  - [Explanation of `useradd` Options](#explanation-of-useradd-options)
+  - [Creating Subdirectories `/bin` and `/HTML`](#creating-subdirectories-bin-and-html)
+  - [Cloning the `generate_index` Script into `/bin/`](#cloning-the-generate_index-script-into-bin)
+  - [Setting Ownership for the `webgen` System User](#setting-ownership-for-the-webgen-system-user)
+  - [Explanation of Setting Ownership Options](#explanation-of-setting-ownership-options)
+- [Task 2: Creating and Configuring `systemd` Service and Timer](#task-2-creating-and-configuring-systemd-service-and-timer)
+  - [Creating the Service File](#creating-the-service-file)
+  - [Creating the Timer Script](#creating-the-timer-script)
+  - [Explanation of the Service File](#explanation-of-the-service-file)
+  - [Starting and Enabling the Timer and Service](#starting-and-enabling-the-timer-and-service)
+- [Task 3: Configuring Nginx](#task-3-configuring-nginx)
+  - [Adding a Server Block in a New Configuration File](#adding-a-server-block-in-a-new-configuration-file)
+  - [Explanation of the Server Block](#explanation-of-the-server-block)
+  - [Checking Nginx Service Status](#checking-nginx-service-status)
+- [Task 4: Installing and Configuring `ufw`](#task-4-installing-and-configuring-ufw)
+  - [Fixing iptables Error](#fixing-iptables-error)
+  - [Enabling Rate Limiting](#enabling-rate-limiting)
+  - [Allowing HTTP Traffic](#allowing-http-traffic)
+- [Task 5: Verifying the Setup](#task-5-verifying-the-setup)
+- [Conclusion](#conclusion)
+- [References](#references)
 
 ## Task 1: Setting up System User with Ownership and Directories 
 
@@ -354,6 +378,60 @@ This command allows HTTP traffic through the firewall, enabling web traffic to r
 
 >[!NOTE]
 > Allowing HTTP traffic is essential for serving web pages to users.
+
+
+### Fixing iptables Error
+
+If you encounter an iptables error after allowing a rule, follow these steps to resolve it. If you do not encounter this error, you can skip to the next section on enabling rate limiting.
+
+Possible error message:
+
+```
+[Errno 2] iptables v1.8.10 (legacy): can't initialize iptables table 'filter': Table does not exist (do you need to insmod?)
+Perhaps iptables or your kernel needs to be upgraded.
+```
+
+#### Steps to Fix iptables Error:
+
+1. **Update your system:**
+
+  ```bash
+  sudo pacman -Syu
+  ```
+
+2. **Update the outdated iptables version:**
+
+  ```bash
+  sudo pacman -S iptables
+  ```
+
+3. **Restart iptables:**
+
+  ```bash
+  sudo systemctl restart iptables
+  ```
+
+  After following these commands it will fix the problem.
+
+### Enabling Rate Limiting
+
+To enhance security, we can enable SSH rate limiting to prevent brute-force attacks. Use the following command to set it up:
+
+```bash
+sudo ufw limit ssh
+```
+
+This setting helps to mitigate brute-force attacks by limiting the rate of SSH login attempts.
+
+### Allowing HTTP Traffic
+
+Allow HTTP traffic through the firewall to enable web traffic to reach your Nginx server:
+
+```bash
+sudo ufw allow http
+```
+
+Allowing HTTP traffic is essential for serving web pages to users.
 
 
 
