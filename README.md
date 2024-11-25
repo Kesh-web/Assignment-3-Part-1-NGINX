@@ -179,7 +179,8 @@ After downloading Nginx, we can then start to edit the main file with the follow
 sudo nvim /etc/nginx/nginx.conf
 ```
 
-You want to change the user from the default to `webgen`, and it should look like the following image:
+You want to change the user from the default to `webgen` as well as uncomment it if it is commented ou and it should look like the following image:
+
 
 ![nginx-user](images/nginx-user.png)
 
@@ -337,7 +338,23 @@ sudo ufw limit ssh
 
 
 
-> **Note:** This setting helps to mitigate brute-force attacks by limiting the rate of SSH login attempts.
+>[!NOTE]
+> This setting helps to mitigate brute-force attacks by limiting the rate of SSH login attempts.
+
+```bash
+sudo ufw allow http
+```
+This command allows HTTP traffic through the firewall, enabling web traffic to reach your Nginx server.
+
+> **Note:** Allowing HTTP traffic is essential for serving web pages to users.
+
+
+
+
+
+
+This will display the current status and rules of the firewall, including the SSH rate limiting and HTTP allowance.
+
 
 After configuring the rate limiting, you can enable `ufw`:
 
@@ -350,27 +367,32 @@ To check the status of `ufw` and confirm that the rules are applied, use the fol
 ```bash
 sudo ufw status
 ```
-![ufw-status](image.png)
+![ufw-status](images/ufw-status.png)
+
 
 This will display the current status and rules of the firewall, including the SSH rate limiting.
+
+## Task 5: Verifying the Setup
+
+With everything configured, visit your droplet's IP address in the browser and take a screenshot of the system information page. The screenshot should clearly show your IP address and the system information page.
+
+![system-information](images/system-information.png)
+
+## Conclusion
+
+Congrats! You have successfully set up your server to generate and serve system information as a static HTML page!!!
 
 
 ## References
 
 - [Arch Linux Wiki: Users and Groups](https://wiki.archlinux.org/title/Users_and_groups)
-- [Arch Linux Wiki: Nginx Server Blocks](https://wiki.archlinux.org/title/Nginx#Server_blocks)
+- [Arch Linux Wiki: Example Adding a System User](https://wiki.archlinux.org/title/Users_and_groups#Example_adding_a_system_user)
 - [Arch Linux Wiki: Nginx](https://wiki.archlinux.org/title/Nginx)
+- [Arch Linux Wiki: Nginx Server Blocks](https://wiki.archlinux.org/title/Nginx#Server_blocks)
 - [Arch Linux Wiki: Running Nginx as a Specific User](https://wiki.archlinux.org/title/Nginx#Running_as_a_specific_user)
+- [Arch Linux Wiki: Systemd](https://wiki.archlinux.org/title/Systemd)
+- [Arch Linux Wiki: Systemd Timers](https://wiki.archlinux.org/title/Systemd/Timers)
+- [Arch Linux Wiki: Uncomplicated Firewall](https://wiki.archlinux.org/title/Uncomplicated_Firewall)
+- [Arch Linux Wiki: Rate Limiting with Ufw](https://wiki.archlinux.org/title/Uncomplicated_Firewall#Rate_limiting_with_ufw)
 
-https://wiki.archlinux.org/title/Users_and_groups#Example_adding_a_system_user
-
-https://wiki.archlinux.org/title/Users_and_groups
-
-https://wiki.archlinux.org/title/Systemd/Timers
-
-https://wiki.archlinux.org/title/Systemd
-
-https://wiki.archlinux.org/title/Uncomplicated_Firewall
-
-https://wiki.archlinux.org/title/Uncomplicated_Firewall#Rate_limiting_with_ufw
 
