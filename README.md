@@ -102,7 +102,8 @@ sudo chown -R webgen:webgen /var/lib/webgen
 - **`-R` recursive:**  
   This command changes the ownership of `/var/lib/webgen` and all files and subdirectories within it, ensuring that all files in the directory are owned by the `webgen` user and group.
 
-> **Caution:** Ensure you use the `-R` option to avoid permission issues with subdirectories and files.
+>[!CAUTION]
+> Ensure you use the `-R` option to avoid permission issues with subdirectories and files.
 
 ## Task 2: Creating and Configuring `systemd` Service and Timer
 
@@ -205,7 +206,7 @@ After downloading Nginx, we can then start to edit the main file with the follow
 sudo nvim /etc/nginx/nginx.conf
 ```
 
-You want to change the user from the default to `webgen` as well as uncomment it if it is commented ou and it should look like the following image:
+You want to change the user from the default to `webgen` as well as uncomment it if it is commented out and it should look like the following image:
 
 
 ![nginx-user](images/nginx-user.png)
@@ -386,10 +387,7 @@ If you encounter an iptables error after allowing a rule, follow these steps to 
 
 Possible error message:
 
-```
-[Errno 2] iptables v1.8.10 (legacy): can't initialize iptables table 'filter': Table does not exist (do you need to insmod?)
-Perhaps iptables or your kernel needs to be upgraded.
-```
+![ip-tables](images/ip-tables.png)
 
 #### Steps to Fix iptables Error:
 
@@ -432,9 +430,6 @@ sudo ufw allow http
 ```
 
 Allowing HTTP traffic is essential for serving web pages to users.
-
-
-
 
 
 
