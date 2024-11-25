@@ -11,7 +11,8 @@ This assignment focuses on building and configuring a simple automated system to
 
 The assignment includes using skills such as Bash scripting, `systemd` management, web server configuration, and basic firewall security.
 
-> **Note:** Ensure you have root or sudo privileges to perform the tasks outlined in the following.
+>[!NOTE]
+> Ensure you have root or sudo privileges to perform the tasks outlined in the following.
 
 ## Table of contents
 
@@ -34,7 +35,8 @@ The first step is creating the system user `webgen` with a home directory of `/v
 - **`-s` shell:**  
   Sets the login shell. Using `/usr/sbin/nologin` disables interactive logins for `webgen`, which is ideal for system users.
 
-> **Important:** Using these specific options ensures that the `webgen` user is configured securely for non-login tasks.
+>[!IMPORTANT]
+> Using these specific options ensures that the `webgen` user is configured securely for non-login tasks.
 
 ### Creating Subdirectories `/bin` and `/HTML`
 
@@ -133,7 +135,8 @@ WantedBy=timers.target
 - **Type=simple:** This tells systemd that the service is a simple service that does not fork. It starts immediately and runs in the foreground.
 - **ExecStart=/var/lib/webgen/bin/generate_index:** Specifies the command that will be executed when the service starts. Here, it runs the `generate_index` script located in `/var/lib/webgen/bin/generate_index`.
 
-> **Note:** The `Type=simple` option means that the service is considered started immediately when the `ExecStart` command is executed.
+>[!NOTE]
+> The `Type=simple` option means that the service is considered started immediately when the `ExecStart` command is executed.
 
 ### Starting and Enabling the Timer and Service
 
@@ -163,7 +166,6 @@ This would be the output showing that it will successfully run daily at 5:00 PM.
 
 ![journalctl_service](images/journalctl_service.png)
 
-> **Note:** Remember to add the missing pictures.
 
 ## Task 3: Configuring Nginx
 
@@ -252,7 +254,8 @@ Instead of modifying the main `nginx.conf` file, we will create a new directory 
 - **`location / { try_files $uri $uri/ =404; }`**  
   Ensures Nginx tries to serve the requested file or directory. If it doesn't exist, a `404 Not Found` error is returned.
 
-> **Important:** Using a separate server block file instead of modifying the main `nginx.conf` file directly helps maintain an organized configuration. It allows you to make updates and changes to an individual server without affecting the main `nginx.conf`, and if there are any issues, you can isolate the problem more easily.
+>[!IMPORTANT]
+> Using a separate server block file instead of modifying the main `nginx.conf` file directly helps maintain an organized configuration. It allows you to make updates and changes to an individual server without affecting the main `nginx.conf`, and if there are any issues, you can isolate the problem more easily.
 
 ### Checking Nginx Service Status
 
@@ -294,7 +297,8 @@ To make sure that Nginx is running properly and the config file we made works, w
 - **`location / { try_files $uri $uri/ =404; }`**  
   Ensures Nginx tries to serve the requested file or directory. If it doesn't exist, a `404 Not Found` error is returned.
 
-> **Important:** Using a separate server block file instead of modifying the main `nginx.conf` file directly helps maintain an organized configuration. It allows you to make updates and changes to an individual server without affecting the main `nginx.conf`, and if there are any issues, you can isolate the problem more easily.g
+>[!IMPORTANT] 
+> Using a separate server block file instead of modifying the main `nginx.conf` file directly helps maintain an organized configuration. It allows you to make updates and changes to an individual server without affecting the main `nginx.conf`, and if there are any issues, you can isolate the problem more easily.g
 
 ### Checking Nginx Service Status
 
@@ -325,7 +329,9 @@ To start we will first install `ufw`, we can do so by typing in the following co
 ```bash
 sudo pacman -Syu ufw
 ```
-> **Caution:** Do not enable `ufw` immediately after installation, as it may lock you out of your SSH session. Ensure you have allowed SSH connections before enabling the firewall.
+
+>[!CAUTION]
+> Do not enable `ufw` immediately after installation, as it may lock you out of your SSH session. Ensure you have allowed SSH connections before enabling the firewall.
 
 ```bash
 sudo ufw allow ssh
@@ -346,7 +352,8 @@ sudo ufw allow http
 ```
 This command allows HTTP traffic through the firewall, enabling web traffic to reach your Nginx server.
 
-> **Note:** Allowing HTTP traffic is essential for serving web pages to users.
+>[!NOTE]
+> Allowing HTTP traffic is essential for serving web pages to users.
 
 
 
